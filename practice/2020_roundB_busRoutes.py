@@ -6,32 +6,24 @@ def solve():
         buses = input().split(" ")
         
         first = int(buses[0])
-        max_day = (d // first) * first
+        start = 0
+        end = d + 1
 
-        solved = 0
-        while solved == 0:
-            possible = 1
-            day = max_day
+        #binary search
+        while start < end:
+            center = (start + end + 1)//2 
+            day = center
             for b in buses:
                 b = int(b)
-                if day > d:
-                    possible = 0 
-                    break
-                elif day%b == 0:
-                    pass
-                else:
+                if day%b != 0:
                     q = day//b
                     day = (q + 1)*b
-                    if day > d:
-                        possible = 0
-                        break
-            
-            if possible == 0:
-                max_day -= first
+            if day > d:
+                end = center - 1
             else:
-                solved = 1
+                start = center
             
-        print("Case #{}: {}".format(i,max_day))
+        print("Case #{}: {}".format(i,start))
 
 if __name__ == "__main__":
     solve()
